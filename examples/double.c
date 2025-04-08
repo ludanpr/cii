@@ -7,6 +7,7 @@
 #include <string.h>
 #include <errno.h>
 #include <ctype.h>
+#include <stdbool.h>
 #include <assert.h>
 
 _Thread_local unsigned long lineno;
@@ -25,7 +26,7 @@ int get_word(FILE *restrict, size_t size, char [size+1]);
  * @brief Reads each word, compares it with the previous
  * word, and complains about duplicates.
  */
-void double_word(char *, FILE *restrict);
+void double_word(const char *restrict, FILE *restrict);
 
 
 int get_word(FILE *restrict fp, size_t size, char buf[size+1])
@@ -53,7 +54,7 @@ int get_word(FILE *restrict fp, size_t size, char buf[size+1])
     return (buf[0] != '\0');
 }
 
-void double_word(char *name, FILE *restrict fp)
+void double_word(const char *restrict name, FILE *restrict fp)
 {
     assert(fp);
     
@@ -70,6 +71,8 @@ void double_word(char *name, FILE *restrict fp)
 
             fprintf(stdout, "%lu: %s\n", lineno, word);
         }
+        while (!strcmp(prev, word))
+            get_word(fp, sizeof word, word);
 
         strcpy(prev, word);
     }
