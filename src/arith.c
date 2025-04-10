@@ -18,7 +18,8 @@ int Arith_div(int a, int b)
      * division truncates toward zero and b doesn't divide x evenly,
      * we have a/b - 1. Otherwise, a/b.
      */
-    if (TRUNCATES_TOWARD_ZERO_P
+    volatile int tzp = -13/5 == -2;  // truncates toward zero?
+    if (tzp
         && ((a < 0) != (b < 0))
         && a%b) {
         return a/b - 1;
@@ -50,7 +51,8 @@ int Arith_floor(int a, int b)
 
 #define ARITH_DIV__BODY(A, B)                   \
 do {                                            \
-    if (TRUNCATES_TOWARD_ZERO_P                 \
+    volatile int tzp = -13/5 == -2;             \
+    if (tzp                                     \
         && ((A < 0) != (B < 0))                 \
         && A%B) {                               \
         return A/B - 1;                         \

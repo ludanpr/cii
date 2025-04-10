@@ -124,7 +124,8 @@ long long Arith_floor__long_long(long long, long long);
     ({ ARITH_ASSERT_TYPES(A, B);          \
        typeof(A) a_ = (A);                \
        typeof(B) b_ = (B);                \
-       (TRUNCATES_TOWARD_ZERO_P           \
+       volatile int tzp = -13/5 == -2;    \
+       (tzp                               \
            && ((a_ < 0) != (b_ < 0))      \
            && a_%b_)                      \
         ? a_/b_ - 1                       \
@@ -135,7 +136,8 @@ long long Arith_floor__long_long(long long, long long);
     ({ ARITH_ASSERT_TYPES(A, B);          \
        typeof(A) a_ = (A);                \
        typeof(B) b_ = (B);                \
-       (TRUNCATES_TOWARD_ZERO_P           \
+       volatile int tzp = -13/5 == -2;    \
+       (tzp                               \
            && ((a_ < 0) != (b_ < 0))      \
            && a_%b_)                      \
         ? a_%b_ + b_                      \
@@ -146,7 +148,8 @@ long long Arith_floor__long_long(long long, long long);
     ({ ARITH_ASSERT_TYPES(A, B);          \
        typeof(A) a_ = (A);                \
        typeof(B) b_ = (B);                \
-       ((TRUNCATES_TOWARD_ZERO_P          \
+       volatile int tzp = -13/5 == -2;    \
+       ((tzp                              \
            && ((a_ < 0) != (b_ < 0))      \
            && a_%b_)                      \
         ? a_/b_ - 1                       \
@@ -157,7 +160,8 @@ long long Arith_floor__long_long(long long, long long);
     ({ ARITH_ASSERT_TYPES(A, B);          \
        typeof(A) a_ = (A);                \
        typeof(B) b_ = (B);                \
-       (TRUNCATES_TOWARD_ZERO_P           \
+       volatile int tzp = -13/5 == -2;    \
+       (tzp                               \
            && ((a_ < 0) != (b_ < 0))      \
            && a_%b_)                      \
         ? a_/b_ - 1                       \
@@ -173,7 +177,5 @@ extern int Arith_ceiling(int, int);
 extern int Arith_floor(int, int);
 
 #endif
-
-#define TRUNCATES_TOWARD_ZERO_P (-13/5 == -2)
 
 #endif
